@@ -3,7 +3,7 @@ import Logger from '../../lib/logger';
 
 class ScoreBoardController {
   async list(req, res) {
-    Logger.header('controller - scoreboard - store');
+    Logger.header('controller - scoreboard - list');
 
     const points = await connection('score')
       .select(
@@ -29,6 +29,12 @@ class ScoreBoardController {
 
     Logger.success('[200]');
     return res.json(ranking);
+  }
+
+  async store(req, res) {
+    Logger.header('controller - scoreboard - store');
+
+    const { id } = req.params;
   }
 }
 

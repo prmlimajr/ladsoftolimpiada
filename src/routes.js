@@ -18,6 +18,7 @@ routes.use(authMiddleware);
 routes.put('/users', UserController.update);
 
 routes.get('/score', ScoreBoardController.list);
+routes.post('/score/:id', ScoreBoardController.store);
 
 // routes.get('/notifications', NotificationController.index);
 // routes.put('/notifications/:id', NotificationController.update);
