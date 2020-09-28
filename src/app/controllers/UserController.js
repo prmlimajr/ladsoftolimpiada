@@ -7,6 +7,10 @@ import Logger from '../../lib/logger';
 class UserController {
   async store(req, res) {
     Logger.header('controller - user - store');
+    const { studentId, semester, course, name, email, password } = req.body;
+    Logger.log(
+      `[${studentId}][${semester}][${course}][${name}][${email}][${password}]`
+    );
 
     const schema = Yup.object().shape({
       studentId: Yup.string().required(),
@@ -21,11 +25,6 @@ class UserController {
       Logger.error('Validation failed');
       return res.status(400).json({ error: 'Validation failed' });
     }
-
-    const { studentId, semester, course, name, email, password } = req.body;
-    Logger.log(
-      `[${studentId}][${semester}][${course}][${name}][${email}][${password}]`
-    );
 
     /**
      * Verifies if the user already exists.

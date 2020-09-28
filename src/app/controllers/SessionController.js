@@ -34,7 +34,7 @@ class SessionController {
 
     if (!userExists) {
       Logger.error('User not found');
-      return res.json({ error: 'User not found' });
+      return res.status(400).json({ error: 'User not found' });
     }
 
     /**
@@ -55,6 +55,9 @@ class SessionController {
         id: userExists.id,
         name: userExists.name,
         email,
+        studentId: userExists.studentId,
+        course: userExists.course,
+        semester: userExists.semester,
       },
       token: jwt.sign({ id: userExists.id }, authConfig.secret, {
         expiresIn: authConfig.expiresIn,
