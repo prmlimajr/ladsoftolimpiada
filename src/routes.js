@@ -16,6 +16,7 @@ routes.post('/users', UserController.store);
 routes.post('/sessions', SessionController.store);
 
 routes.use(authMiddleware);
+routes.get('/ranking', UserController.listRanking);
 routes.put('/users', UserController.update);
 
 routes.get('/score', ScoreBoardController.list);

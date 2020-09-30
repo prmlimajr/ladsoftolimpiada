@@ -36,27 +36,26 @@ class ScoreBoardController {
     Logger.header('controller - scoreboard - list one');
     Logger.header(`[${req.userId}]`);
 
-    const [row] = await connection('users')
-      .select('users.*')
-      .join('score', 'users.id', 'score.user_id')
-      .count('score.point', { as: 'points' })
+    const rows = await connection('users')
+      .select('users.*', 'score.point')
+      .leftJoin('score', 'users.id', 'score.user_id')
       .where('users.id', '=', req.userId);
 
-    // .count('score.point', { as: 'points' })
-    // .join('score', 'users.id', 'score.user_id')
-    // .groupBy('score.user_id')
-    // .where('users.id', '=', req.userId);
+    let points = 0;
+    for (let row of rows) {
+      row.point === 1 ? points++ : '';
+    }
 
     const userPoints = {
-      id: row.id,
-      studentId: row.studentId,
-      semester: row.semester,
-      course: row.course,
-      name: row.name,
-      email: row.email,
-      points: row.points,
+      id: rows[0].id,
+      studentId: rows[0].studentId,
+      semester: rows[0].semester,
+      course: rows[0].course,
+      name: rows[0].name,
+      email: rows[0].email,
+      points,
     };
-
+    console.log(userPoints);
     Logger.success('[200]');
     return res.json(userPoints);
   }

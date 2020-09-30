@@ -171,6 +171,35 @@ class UserController {
       ...user,
     });
   }
+
+  async listRanking(req, res) {
+    Logger.header('controller - user - list all');
+
+    const list = await connection('users')
+      .select('users.*')
+      //CONSERTAR ISSO AQUI - ESTÁ CONTANDO
+      .count('score.point', { as: 'points' })
+      .leftJoin('score', 'score.user_id', 'users.id')
+      .groupBy('users.id')
+      .orderBy('points', 'desc');
+
+    if (list.length === 0) {
+      Logger.error('Empty list');
+      return res.status(400).json({ error: 'Empty list' });
+    }
+
+    const ranking = list.map((row) => {
+      return {
+        id: row.id,
+        semester: row.semester,
+        course: row.course,
+        name: row.name,
+        points: row.points,
+      };
+    });
+
+    return res.json(ranking);
+  }
 }
 
 export default new UserController();
