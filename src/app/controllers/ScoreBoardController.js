@@ -1,3 +1,4 @@
+import * as Yup from 'yup';
 import connection from '../../database/connection';
 import Logger from '../../lib/logger';
 
@@ -31,10 +32,70 @@ class ScoreBoardController {
     return res.json(ranking);
   }
 
-  async store(req, res) {
-    Logger.header('controller - scoreboard - store');
+  async listOne(req, res) {
+    Logger.header('controller - scoreboard - list one');
+    Logger.header(`[${req.userId}]`);
 
+    const [row] = await connection('users')
+      .select('users.*')
+      .join('score', 'users.id', 'score.user_id')
+      .count('score.point', { as: 'points' })
+      .where('users.id', '=', req.userId);
+
+    // .count('score.point', { as: 'points' })
+    // .join('score', 'users.id', 'score.user_id')
+    // .groupBy('score.user_id')
+    // .where('users.id', '=', req.userId);
+
+    const userPoints = {
+      id: row.id,
+      studentId: row.studentId,
+      semester: row.semester,
+      course: row.course,
+      name: row.name,
+      email: row.email,
+      points: row.points,
+    };
+
+    Logger.success('[200]');
+    return res.json(userPoints);
+  }
+
+  async answer(req, res) {
     const { id } = req.params;
+    const { answer } = req.body;
+    Logger.header('controller - scoreboard - answer');
+    Logger.header(`[${id}][${answer}]`);
+
+    /**
+     * Verifies if the question has been answered already by that user
+     */
+    const [answeredQuestion] = await connection('score')
+      .select('score.*')
+      .where({ 'score.user_id': req.userId, 'score.challenge_id': id });
+
+    if (answeredQuestion) {
+      Logger.error('Question already anwered');
+      return res.status(400).json({ error: 'Question already answered' });
+    }
+
+    /**
+     * Verifies if the answer is correct
+     */
+    const [rightAnswer] = await connection('challenges')
+      .select('challenges.*')
+      .where('challenges.id', '=', id);
+
+    const insert = {
+      user_id: req.userId,
+      challenge_id: id,
+      point: answer === rightAnswer.answer ? 1 : 0,
+      answer,
+    };
+
+    const insertedAnswer = await connection('score').insert(insert);
+
+    return res.json(insert);
   }
 }
 

@@ -5,6 +5,7 @@ import multerConfig from './config/multer';
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
 import ScoreBoardController from './app/controllers/ScoreBoardController';
+import ChallengeController from './app/controllers/ChallengeController';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -18,7 +19,10 @@ routes.use(authMiddleware);
 routes.put('/users', UserController.update);
 
 routes.get('/score', ScoreBoardController.list);
-routes.post('/score/:id', ScoreBoardController.store);
+routes.get('/score/:id', ScoreBoardController.listOne);
+routes.post('/answer/:id', ScoreBoardController.answer);
+
+routes.get('/challenges', ChallengeController.list);
 
 // routes.get('/notifications', NotificationController.index);
 // routes.put('/notifications/:id', NotificationController.update);
