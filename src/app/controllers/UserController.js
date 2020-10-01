@@ -177,8 +177,7 @@ class UserController {
 
     const list = await connection('users')
       .select('users.*')
-      //CONSERTAR ISSO AQUI - ESTÁ CONTANDO
-      .count('score.point', { as: 'points' })
+      .sum('score.point', { as: 'points' })
       .leftJoin('score', 'score.user_id', 'users.id')
       .groupBy('users.id')
       .orderBy('points', 'desc');
@@ -194,7 +193,7 @@ class UserController {
         semester: row.semester,
         course: row.course,
         name: row.name,
-        points: row.points,
+        points: row.points === null ? 0 : row.points,
       };
     });
 
