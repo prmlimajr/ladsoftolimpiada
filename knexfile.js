@@ -1,12 +1,14 @@
+import 'dotenv/config';
+
 const path = require('path');
 
 module.exports = {
   client: 'mysql2',
   connection: {
-    host: 'localhost',
-    user: 'root',
-    password: 'root',
-    database: 'ladsoftolimpiada',
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME,
   },
   migrations: {
     directory: path.resolve(__dirname, 'src', 'database', 'migrations'),
