@@ -1,4 +1,4 @@
-import 'dotenv/config';
+// import 'dotenv/config';
 import Logger from './lib/logger';
 import cors from 'cors';
 
