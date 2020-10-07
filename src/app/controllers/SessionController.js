@@ -1,9 +1,9 @@
-import jwt from 'jsonwebtoken';
-import * as Yup from 'yup';
-import bcrypt from 'bcryptjs';
-import connection from '../../database/connection';
-import authConfig from '../../config/auth';
-import Logger from '../../lib/logger';
+const jwt = require('jsonwebtoken');
+const Yup = require('yup');
+const bcrypt = require('bcryptjs');
+const connection = require('../../database/connection');
+const authConfig = require('../../config/auth');
+const Logger = require('../../lib/logger');
 
 class SessionController {
   async store(req, res) {
@@ -66,4 +66,4 @@ class SessionController {
   }
 }
 
-export default new SessionController();
+module.exports = new SessionController();

@@ -1,6 +1,6 @@
-import * as Yup from 'yup';
-import connection from '../../database/connection';
-import Logger from '../../lib/logger';
+// import * as Yup from 'yup';
+const connection = require('../../database/connection');
+const Logger = require('../../lib/logger');
 
 class ScoreBoardController {
   async list(req, res) {
@@ -98,4 +98,4 @@ class ScoreBoardController {
   }
 }
 
-export default new ScoreBoardController();
+module.exports = new ScoreBoardController();

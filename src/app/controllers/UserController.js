@@ -1,8 +1,8 @@
-import bcrypt from 'bcryptjs';
-import * as Yup from 'yup';
+const bcrypt = require('bcryptjs');
+const Yup = require('yup');
 
-import connection from '../../database/connection';
-import Logger from '../../lib/logger';
+const connection = require('../../database/connection');
+const Logger = require('../../lib/logger');
 
 class UserController {
   async store(req, res) {
@@ -201,4 +201,4 @@ class UserController {
   }
 }
 
-export default new UserController();
+module.exports = new UserController();

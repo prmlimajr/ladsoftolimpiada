@@ -1,12 +1,12 @@
-import 'dotenv/config';
+// import 'dotenv/config';
 
-import cors from 'cors';
-import express from 'express';
-import Youch from 'youch';
-import * as Sentry from '@sentry/node';
-import 'express-async-errors';
-import routes from './routes';
-import sentryConfig from './config/sentry';
+const cors = require('cors');
+const express = require('express');
+const Youch = require('youch');
+const Sentry = require('@sentry/node');
+require('express-async-errors');
+const routes = require('./routes');
+const sentryConfig = require('./config/sentry');
 
 class App {
   constructor() {
@@ -43,4 +43,4 @@ class App {
   }
 }
 
-export default new App().server;
+module.exports = new App().server;

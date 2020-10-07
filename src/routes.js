@@ -1,11 +1,11 @@
-import { Router } from 'express';
+const Router = require('express').Router;
 
-import UserController from './app/controllers/UserController';
-import SessionController from './app/controllers/SessionController';
-import ScoreBoardController from './app/controllers/ScoreBoardController';
-import ChallengeController from './app/controllers/ChallengeController';
+const UserController = require('./app/controllers/UserController');
+const SessionController = require('./app/controllers/SessionController');
+const ScoreBoardController = require('./app/controllers/ScoreBoardController');
+const ChallengeController = require('./app/controllers/ChallengeController');
 
-import authMiddleware from './app/middlewares/auth';
+const authMiddleware = require('./app/middlewares/auth');
 
 const routes = new Router();
 
@@ -22,4 +22,4 @@ routes.post('/answer/:id', ScoreBoardController.answer);
 
 routes.get('/challenges', ChallengeController.list);
 
-export default routes;
+module.exports = routes;

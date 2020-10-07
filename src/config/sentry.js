@@ -1,3 +1,3 @@
-export default {
+module.exports = {
   dsn: process.env.SENTRY_DSN,
 };

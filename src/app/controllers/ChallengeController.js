@@ -1,5 +1,5 @@
-import connection from '../../database/connection';
-import Logger from '../../lib/logger';
+const connection = require('../../database/connection');
+const Logger = require('../../lib/logger');
 
 class ChallengeController {
   async list(req, res) {
@@ -27,4 +27,4 @@ class ChallengeController {
   }
 }
 
-export default new ChallengeController();
+module.exports = new ChallengeController();

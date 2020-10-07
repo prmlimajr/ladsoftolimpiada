@@ -1,7 +1,7 @@
-import 'dotenv/config';
+require('dotenv/config');
 
-import knex from 'knex';
-import path from 'path';
+const knex = require('knex');
+const path = require('path');
 
 const connection = knex({
   client: 'mysql2',
@@ -20,4 +20,4 @@ const connection = knex({
   useNullAsDefault: true,
 });
 
-export default connection;
+module.exports = connection;
