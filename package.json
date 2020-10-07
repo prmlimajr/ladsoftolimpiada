@@ -35,5 +35,8 @@
   },
   "engines": {
     "node": "10.16.3"
+  },
+  {
+    "type": "module"
   }
 }
