@@ -22,7 +22,12 @@ class App {
   middlewares() {
     this.server.use(Sentry.Handlers.requestHandler());
     this.server.use(
-      cors({ origin: 'https://ladsoft-olimpiada.herokuapp.com/' })
+      cors({
+        origin: 'https://ladsoft-olimpiada.herokuapp.com/',
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+        preflightContinue: false,
+        optionsSuccessStatus: 204,
+      })
     );
     this.server.use(express.json());
   }
