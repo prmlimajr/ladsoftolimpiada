@@ -6,7 +6,7 @@ const auth = async (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
-    return res.status(401).json({ dale: 'boy' });
+    return res.status(401).json({ error: 'Missing authorization header' });
   }
 
   const [, token] = authHeader.split(' ');
