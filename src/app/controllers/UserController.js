@@ -190,6 +190,7 @@ class UserController {
     const ranking = list.map((row) => {
       return {
         id: row.id,
+        studentId: row.studentId,
         semester: row.semester,
         course: row.course,
         name: row.name,
