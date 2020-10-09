@@ -96,6 +96,35 @@ class ScoreBoardController {
 
     return res.json(insert);
   }
+
+  async listPoints(req, res) {
+    Logger.log('api - score - list points');
+    Logger.header(`[${req.userId}]`);
+
+    const userPoints = await connection('score')
+      .select('score.*')
+      .where({ 'score.user_id': req.userId })
+      .orderBy('score.challenge_id', 'asc');
+
+    if (userPoints.length === 0) {
+      Logger.error('empty list');
+      return res.status(401).json({ error: 'Empty list' });
+    }
+
+    const myScore = userPoints.map((challenge) => {
+      let level =
+        challenge.challenge_id <= 10 ? 1 : challenge.challenge_id <= 20 ? 2 : 3;
+      return {
+        user_id: challenge.user_id,
+        challenge_id: challenge.challenge_id,
+        point: challenge.point,
+        answer: challenge.answer,
+        level,
+      };
+    });
+
+    return res.json(myScore);
+  }
 }
 
 module.exports = new ScoreBoardController();

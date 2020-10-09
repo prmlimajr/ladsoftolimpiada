@@ -17,6 +17,7 @@ routes.get('/ranking', UserController.listRanking);
 routes.put('/users', UserController.update);
 
 routes.get('/score', ScoreBoardController.list);
+routes.get('/points', ScoreBoardController.listPoints);
 routes.get('/score/:id', ScoreBoardController.listOne);
 routes.post('/answer/:id', ScoreBoardController.answer);
 
